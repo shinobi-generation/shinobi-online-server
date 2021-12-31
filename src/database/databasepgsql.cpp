@@ -14,13 +14,13 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ////////////////////////////////////////////////////////////////////////
-#include "otpch.h"
+#include "../otpch.h"
 #include <iostream>
 
-#include "database.h"
+#include "../database.h"
 #include "databasepgsql.h"
 
-#include "configmanager.h"
+#include "../configmanager.h"
 extern ConfigManager g_config;
 
 DatabasePgSQL::DatabasePgSQL()

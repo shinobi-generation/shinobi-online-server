@@ -14,10 +14,10 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ////////////////////////////////////////////////////////////////////////
-#include "otpch.h"
-#include "scheduler.h"
+#include "../otpch.h"
+#include "../scheduler.h"
 
-#include "database.h"
+#include "../database.h"
 #include "databasemysql.h"
 
 #ifdef __MYSQL_ALT_INCLUDE__
@@ -27,7 +27,7 @@
 #endif
 #include <iostream>
 
-#include "configmanager.h"
+#include "../configmanager.h"
 extern ConfigManager g_config;
 
 DatabaseMySQL::DatabaseMySQL()

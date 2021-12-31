@@ -19,13 +19,13 @@
 //
 // Author: Bruno R Ferreira <brf_coldf@yahoo.com.br>, (C) 2007
 ////////////////////////////////////////////////////////////////////////
-#include "otpch.h"
+#include "../otpch.h"
 #include <iostream>
 
-#include "database.h"
+#include "../database.h"
 #include "databaseodbc.h"
 
-#include "configmanager.h"
+#include "../configmanager.h"
 extern ConfigManager g_config;
 
 #define RETURN_SUCCESS(ret) (ret == SQL_SUCCESS || ret == SQL_SUCCESS_WITH_INFO)

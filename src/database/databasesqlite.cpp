@@ -14,15 +14,15 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ////////////////////////////////////////////////////////////////////////
-#include "otpch.h"
+#include "../otpch.h"
 #include <iostream>
 #include <boost/regex.hpp>
 
-#include "database.h"
+#include "../database.h"
 #include "databasesqlite.h"
 
-#include "tools.h"
-#include "configmanager.h"
+#include "../tools.h"
+#include "../configmanager.h"
 extern ConfigManager g_config;
 
 #if SQLITE_VERSION_NUMBER < 3003009
