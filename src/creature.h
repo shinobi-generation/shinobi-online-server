@@ -532,7 +532,7 @@ class Creature : public AutoId, virtual public Thing
 
 		virtual Item* createCorpse(DeathList deathList);
 		virtual void dropLoot(Container* corpse) {}
-		virtual void dropCorpse(DeathList deathList);
+		virtual void dropCorpse(const DeathList& deathList);
 
 		virtual void doAttacking(uint32_t interval) {}
 		void internalCreatureDisappear(const Creature* creature, bool isLogout);

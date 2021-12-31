@@ -43,9 +43,9 @@ extern CreatureEvents* g_creatureEvents;
 Creature::Creature()
 {
 	id = 0;
-	_tile = NULL;
+	_tile = nullptr;
 	direction = SOUTH;
-	master = NULL;
+	master = nullptr;
 	lootDrop = LOOT_DROP_FULL;
 	skillLoss = true;
 	hideName = hideHealth = cannotMove = false;
@@ -66,7 +66,7 @@ Creature::Creature()
 	masterRadius = -1;
 	masterPosition = Position();
 
-	followCreature = NULL;
+	followCreature = nullptr;
 	hasFollowPath = false;
 	removed = false;
 	eventWalk = 0;
@@ -76,7 +76,7 @@ Creature::Creature()
 	checked = false;
 	memset(localMapCache, false, sizeof(localMapCache));
 
-	attackedCreature = NULL;
+	attackedCreature = nullptr;
 	lastHitCreature = 0;
 	lastDamageSource = COMBAT_NONE;
 	blockCount = 0;
@@ -90,13 +90,13 @@ Creature::Creature()
 
 Creature::~Creature()
 {
-	attackedCreature = NULL;
+	attackedCreature = nullptr;
 	removeConditions(CONDITIONEND_CLEANUP, false);
-	for(std::list<Creature*>::iterator cit = summons.begin(); cit != summons.end(); ++cit)
+	for(auto & summon : summons)
 	{
-		(*cit)->setAttackedCreature(NULL);
-		(*cit)->setMaster(NULL);
-		(*cit)->unRef();
+		summon->setAttackedCreature(nullptr);
+		summon->setMaster(nullptr);
+		summon->unRef();
 	}
 
 	summons.clear();
@@ -202,8 +202,8 @@ void Creature::onThink(uint32_t interval)
 	executeConditions(interval);
 
 	CreatureEventList thinkEvents = getCreatureEvents(CREATURE_EVENT_THINK);
-	for(CreatureEventList::iterator it = thinkEvents.begin(); it != thinkEvents.end(); ++it)
-		(*it)->executeThink(this, interval);
+	for(auto & thinkEvent : thinkEvents)
+		thinkEvent->executeThink(this, interval);
 }
 
 void Creature::onAttacking(uint32_t interval)
@@ -212,10 +212,10 @@ void Creature::onAttacking(uint32_t interval)
 		return;
 
 	CreatureEventList attackEvents = getCreatureEvents(CREATURE_EVENT_ATTACK);
-	for(CreatureEventList::iterator it = attackEvents.begin(); it != attackEvents.end(); ++it)
+	for(auto & attackEvent : attackEvents)
 	{
-		if(!(*it)->executeAttack(this, attackedCreature) && attackedCreature)
-			setAttackedCreature(NULL);
+		if(!attackEvent->executeAttack(this, attackedCreature) && attackedCreature)
+			setAttackedCreature(nullptr);
 	}
 
 	if(!attackedCreature)
@@ -328,13 +328,13 @@ void Creature::internalCreatureDisappear(const Creature* creature, bool isLogout
 {
 	if(attackedCreature == creature)
 	{
-		setAttackedCreature(NULL);
+		setAttackedCreature(nullptr);
 		onAttackedCreatureDisappear(isLogout);
 	}
 
 	if(followCreature == creature)
 	{
-		setFollowCreature(NULL);
+		setFollowCreature(nullptr);
 		onFollowCreatureDisappear(isLogout);
 	}
 }
@@ -344,7 +344,7 @@ void Creature::updateMapCache()
 	const Position& myPos = getPosition();
 	Position pos(0, 0, myPos.z);
 
-	Tile* tile = NULL;
+	Tile* tile = nullptr;
 	for(int32_t y = -((mapWalkHeight - 1) / 2); y <= ((mapWalkHeight - 1) / 2); ++y)
 	{
 		for(int32_t x = -((mapWalkWidth - 1) / 2); x <= ((mapWalkWidth - 1) / 2); ++x)
@@ -531,7 +531,7 @@ void Creature::onCreatureMove(const Creature* creature, const Tile* newTile, con
 		{
 			if(!teleport && oldPos.z == newPos.z)
 			{
-				Tile* tile = NULL;
+				Tile* tile = nullptr;
 				const Position& myPos = getPosition();
 				if(oldPos.y > newPos.y) //north
 				{
@@ -630,7 +630,7 @@ void Creature::onCreatureMove(const Creature* creature, const Tile* newTile, con
 		{
 			isUpdatingPath = true;
 			Dispatcher::getInstance().addTask(createTask(
-				boost::bind(&Game::updateCreatureWalk, &g_game, getID())));
+				[ObjectPtr = &g_game, capture0 = getID()] { ObjectPtr->updateCreatureWalk(capture0); }));
 		}
 
 		if(newPos.z != oldPos.z || !canSee(followCreature->getPosition()))
@@ -643,7 +643,7 @@ void Creature::onCreatureMove(const Creature* creature, const Tile* newTile, con
 		{
 			if(hasExtraSwing()) //our target is moving lets see if we can get in hit
 				Dispatcher::getInstance().addTask(createTask(
-					boost::bind(&Game::checkCreatureAttack, &g_game, getID())));
+					[ObjectPtr = &g_game, capture0 = getID()] { ObjectPtr->checkCreatureAttack(capture0); }));
 
 			if(newTile->getZone() != oldTile->getZone())
 				onAttackedCreatureChangeZone(attackedCreature->getZone());
@@ -659,9 +659,9 @@ bool Creature::onDeath()
 	bool deny = false;
 
 	CreatureEventList prepareDeathEvents = getCreatureEvents(CREATURE_EVENT_PREPAREDEATH);
-	for(CreatureEventList::iterator it = prepareDeathEvents.begin(); it != prepareDeathEvents.end(); ++it)
+	for(auto & prepareDeathEvent : prepareDeathEvents)
 	{
-		if(!(*it)->executePrepareDeath(this, deathList) && !deny)
+		if(!prepareDeathEvent->executePrepareDeath(this, deathList) && !deny)
 			deny = true;
 	}
 
@@ -672,9 +672,9 @@ bool Creature::onDeath()
 	if(limit > 0 && size > limit)
 		size = limit;
 
-	Creature* tmp = NULL;
+	Creature* tmp = nullptr;
 	CreatureVector justifyVec;
-	for(DeathList::iterator it = deathList.begin(); it != deathList.end(); ++it, ++i)
+	for(auto it = deathList.begin(); it != deathList.end(); ++it, ++i)
 	{
 		if(it->isNameKill())
 			continue;
@@ -700,7 +700,7 @@ bool Creature::onDeath()
 				justifyVec.push_back(tmp);
 			}
 
-			tmp = NULL;
+			tmp = nullptr;
 		}
 
 		if(!it->getKillerCreature()->onKilledCreature(this, flags) && lastHit)
@@ -710,9 +710,9 @@ bool Creature::onDeath()
 			it->setUnjustified(true);
 	}
 
-	for(CountMap::iterator it = damageMap.begin(); it != damageMap.end(); ++it)
+	for(auto & it : damageMap)
 	{
-		if((tmp = g_game.getCreatureByID(it->first)))
+		if((tmp = g_game.getCreatureByID(it.first)))
 			tmp->onAttackedCreatureKilled(this);
 	}
 
@@ -723,7 +723,7 @@ bool Creature::onDeath()
 	return true;
 }
 
-void Creature::dropCorpse(DeathList deathList)
+void Creature::dropCorpse(const DeathList& deathList)
 {
 	Item* corpse = createCorpse(deathList);
 	if(corpse)
@@ -731,16 +731,16 @@ void Creature::dropCorpse(DeathList deathList)
 
 	bool deny = false;
 	CreatureEventList deathEvents = getCreatureEvents(CREATURE_EVENT_DEATH);
-	for(CreatureEventList::iterator it = deathEvents.begin(); it != deathEvents.end(); ++it)
+	for(auto & deathEvent : deathEvents)
 	{
-		if(!(*it)->executeDeath(this, corpse, deathList) && !deny)
+		if(!deathEvent->executeDeath(this, corpse, deathList) && !deny)
 			deny = true;
 	}
 
 	if(!corpse)
 		return;
 
-	corpse->setParent(NULL);
+	corpse->setParent(nullptr);
 	if(deny)
 		return;
 
@@ -748,7 +748,7 @@ void Creature::dropCorpse(DeathList deathList)
 	if(!tile)
 		return;
 
-	Item* splash = NULL;
+	Item* splash = nullptr;
 	switch(getRace())
 	{
 		case RACE_VENOM:
@@ -765,11 +765,11 @@ void Creature::dropCorpse(DeathList deathList)
 
 	if(splash)
 	{
-		g_game.internalAddItem(NULL, tile, splash, INDEX_WHEREEVER, FLAG_NOLIMIT);
+		g_game.internalAddItem(nullptr, tile, splash, INDEX_WHEREEVER, FLAG_NOLIMIT);
 		g_game.startDecay(splash);
 	}
 
-	g_game.internalAddItem(NULL, tile, corpse, INDEX_WHEREEVER, FLAG_NOLIMIT);
+	g_game.internalAddItem(nullptr, tile, corpse, INDEX_WHEREEVER, FLAG_NOLIMIT);
 	dropLoot(corpse->getContainer());
 	g_game.startDecay(corpse);
 }
@@ -777,7 +777,7 @@ void Creature::dropCorpse(DeathList deathList)
 DeathList Creature::getKillers()
 {
 	DeathList list;
-	Creature* lhc = NULL;
+	Creature* lhc = nullptr;
 	if(!(lhc = g_game.getCreatureByID(lastHitCreature)))
 		list.push_back(DeathEntry(getCombatName(lastDamageSource), 0));
 	else
@@ -787,23 +787,23 @@ DeathList Creature::getKillers()
 	int64_t now = OTSYS_TIME();
 
 	CountBlock_t cb;
-	for(CountMap::const_iterator it = damageMap.begin(); it != damageMap.end(); ++it)
+	for(auto & it : damageMap)
 	{
-		cb = it->second;
+		cb = it.second;
 		if((now - cb.ticks) > requiredTime)
 			continue;
 
-		Creature* mdc = g_game.getCreatureByID(it->first);
+		Creature* mdc = g_game.getCreatureByID(it.first);
 		if(!mdc || mdc == lhc || (lhc && (mdc->getMaster() == lhc || lhc->getMaster() == mdc)))
 			continue;
 
 		bool deny = false;
-		for(DeathList::iterator fit = list.begin(); fit != list.end(); ++fit)
+		for(auto & fit : list)
 		{
-			if(fit->isNameKill())
+			if(fit.isNameKill())
 				continue;
 
-			Creature* tmp = fit->getKillerCreature();
+			Creature* tmp = fit.getKillerCreature();
 			if(!(mdc->getName() == tmp->getName() && mdc->getMaster() == tmp->getMaster()) &&
 				(!mdc->getMaster() || (mdc->getMaster() != tmp && mdc->getMaster() != tmp->getMaster()))
 				&& (mdc->getSummonCount() <= 0 || tmp->getMaster() != mdc))
@@ -825,7 +825,7 @@ DeathList Creature::getKillers()
 
 bool Creature::hasBeenAttacked(uint32_t attackerId) const
 {
-	CountMap::const_iterator it = damageMap.find(attackerId);
+	auto it = damageMap.find(attackerId);
 	if(it != damageMap.end())
 		return (OTSYS_TIME() - it->second.ticks) <= g_config.getNumber(ConfigManager::PZ_LOCKED);
 
@@ -857,7 +857,7 @@ void Creature::changeMana(int32_t manaChange)
 
 bool Creature::getStorage(const uint32_t key, std::string& value) const
 {
-	StorageMap::const_iterator it = storageMap.find(key);
+	auto it = storageMap.find(key);
 	if(it != storageMap.end())
 	{
 		value = it->second;
@@ -984,7 +984,7 @@ bool Creature::setAttackedCreature(Creature* creature)
 		const Position& creaturePos = creature->getPosition();
 		if(creaturePos.z != getPosition().z || !canSee(creaturePos))
 		{
-			attackedCreature = NULL;
+			attackedCreature = nullptr;
 			return false;
 		}
 	}
@@ -996,7 +996,7 @@ bool Creature::setAttackedCreature(Creature* creature)
 		attackedCreature->onAttacked();
 	}
 
-	for(std::list<Creature*>::iterator cit = summons.begin(); cit != summons.end(); ++cit)
+	for(auto cit = summons.begin(); cit != summons.end(); ++cit)
 		(*cit)->setAttackedCreature(creature);
 
 	return true;
@@ -1038,7 +1038,7 @@ bool Creature::setFollowCreature(Creature* creature, bool fullPathSearch /*= fal
 		const Position& creaturePos = creature->getPosition();
 		if(creaturePos.z != getPosition().z || !canSee(creaturePos))
 		{
-			followCreature = NULL;
+			followCreature = nullptr;
 			return false;
 		}
 
@@ -1055,7 +1055,7 @@ bool Creature::setFollowCreature(Creature* creature, bool fullPathSearch /*= fal
 	else
 	{
 		isUpdatingPath = false;
-		followCreature = NULL;
+		followCreature = nullptr;
 	}
 
 	onFollowCreature(creature);
@@ -1065,11 +1065,11 @@ bool Creature::setFollowCreature(Creature* creature, bool fullPathSearch /*= fal
 double Creature::getDamageRatio(Creature* attacker) const
 {
 	double totalDamage = 0, attackerDamage = 0;
-	for(CountMap::const_iterator it = damageMap.begin(); it != damageMap.end(); ++it)
+	for(const auto & damage : damageMap)
 	{
-		totalDamage += it->second.total;
-		if(it->first == attacker->getID())
-			attackerDamage += it->second.total;
+		totalDamage += damage.second.total;
+		if(damage.first == attacker->getID())
+			attackerDamage += damage.second.total;
 	}
 
 	return attackerDamage / totalDamage;
@@ -1081,7 +1081,7 @@ void Creature::addDamagePoints(Creature* attacker, int32_t damagePoints)
 	if(attacker)
 		attackerId = attacker->getID();
 
-	CountMap::iterator it = damageMap.find(attackerId);
+	auto it = damageMap.find(attackerId);
 	if(it != damageMap.end())
 	{
 		it->second.ticks = OTSYS_TIME();
@@ -1286,24 +1286,24 @@ void Creature::addSummon(Creature* creature)
 
 void Creature::removeSummon(const Creature* creature)
 {
-	std::list<Creature*>::iterator it = std::find(summons.begin(), summons.end(), creature);
+	auto it = std::find(summons.begin(), summons.end(), creature);
 	if(it == summons.end())
 		return;
 
-	(*it)->setMaster(NULL);
+	(*it)->setMaster(nullptr);
 	(*it)->unRef();
 	summons.erase(it);
 }
 
 void Creature::destroySummons()
 {
-	for(std::list<Creature*>::iterator it = summons.begin(); it != summons.end(); ++it)
+	for(auto & summon : summons)
 	{
-		(*it)->setAttackedCreature(NULL);
-		(*it)->changeHealth(-(*it)->getHealth());
+		summon->setAttackedCreature(nullptr);
+		summon->changeHealth(-summon->getHealth());
 
-		(*it)->setMaster(NULL);
-		(*it)->unRef();
+		summon->setMaster(nullptr);
+		summon->unRef();
 	}
 
 	summons.clear();
@@ -1347,7 +1347,7 @@ bool Creature::addCombatCondition(Condition* condition)
 
 void Creature::removeCondition(ConditionType_t type)
 {
-	for(ConditionList::iterator it = conditions.begin(); it != conditions.end();)
+	for(auto it = conditions.begin(); it != conditions.end();)
 	{
 		if((*it)->getType() != type)
 		{
@@ -1366,7 +1366,7 @@ void Creature::removeCondition(ConditionType_t type)
 
 void Creature::removeCondition(ConditionType_t type, ConditionId_t id)
 {
-	for(ConditionList::iterator it = conditions.begin(); it != conditions.end();)
+	for(auto it = conditions.begin(); it != conditions.end();)
 	{
 		if((*it)->getType() != type || (*it)->getId() != id)
 		{
@@ -1385,10 +1385,10 @@ void Creature::removeCondition(ConditionType_t type, ConditionId_t id)
 
 void Creature::removeCondition(Condition* condition)
 {
-	ConditionList::iterator it = std::find(conditions.begin(), conditions.end(), condition);
+	auto it = std::find(conditions.begin(), conditions.end(), condition);
 	if(it != conditions.end())
 	{
-		Condition* condition = *it;
+		condition = *it;
 		it = conditions.erase(it);
 
 		condition->endCondition(this, CONDITIONEND_ABORT);
@@ -1400,16 +1400,16 @@ void Creature::removeCondition(Condition* condition)
 void Creature::removeCondition(const Creature* attacker, ConditionType_t type)
 {
 	ConditionList tmpList = conditions;
-	for(ConditionList::iterator it = tmpList.begin(); it != tmpList.end(); ++it)
+	for(auto & it : tmpList)
 	{
-		if((*it)->getType() == type)
-			onCombatRemoveCondition(attacker, *it);
+		if(it->getType() == type)
+			onCombatRemoveCondition(attacker, it);
 	}
 }
 
 void Creature::removeConditions(ConditionEnd_t reason, bool onlyPersistent/* = true*/)
 {
-	for(ConditionList::iterator it = conditions.begin(); it != conditions.end();)
+	for(auto it = conditions.begin(); it != conditions.end();)
 	{
 		if(onlyPersistent && !(*it)->isPersistent())
 		{
@@ -1428,18 +1428,18 @@ void Creature::removeConditions(ConditionEnd_t reason, bool onlyPersistent/* = t
 
 Condition* Creature::getCondition(ConditionType_t type, ConditionId_t id, uint32_t subId/* = 0*/) const
 {
-	for(ConditionList::const_iterator it = conditions.begin(); it != conditions.end(); ++it)
+	for(auto condition : conditions)
 	{
-		if((*it)->getType() == type && (*it)->getId() == id && (*it)->getSubId() == subId)
-			return *it;
+		if(condition->getType() == type && condition->getId() == id && condition->getSubId() == subId)
+			return condition;
 	}
 
-	return NULL;
+	return nullptr;
 }
 
 void Creature::executeConditions(uint32_t interval)
 {
-	for(ConditionList::iterator it = conditions.begin(); it != conditions.end();)
+	for(auto it = conditions.begin(); it != conditions.end();)
 	{
 		if((*it)->executeCondition(this, interval))
 		{
@@ -1461,13 +1461,13 @@ bool Creature::hasCondition(ConditionType_t type, int32_t subId/* = 0*/, bool ch
 	if(isSuppress(type))
 		return false;
 
-	for(ConditionList::const_iterator it = conditions.begin(); it != conditions.end(); ++it)
+	for(auto condition : conditions)
 	{
-		if((*it)->getType() != type || (subId != -1 && (*it)->getSubId() != (uint32_t)subId))
+		if(condition->getType() != type || (subId != -1 && condition->getSubId() != (uint32_t)subId))
 			continue;
 
 		if(!checkTime || g_config.getBool(ConfigManager::OLD_CONDITION_ACCURACY)
-			|| !(*it)->getEndTime() || (*it)->getEndTime() >= OTSYS_TIME())
+			|| !condition->getEndTime() || condition->getEndTime() >= OTSYS_TIME())
 			return true;
 	}
 
@@ -1543,9 +1543,9 @@ bool Creature::registerCreatureEvent(const std::string& name)
 	if(!event) //check for existance
 		return false;
 
-	for(CreatureEventList::iterator it = eventsList.begin(); it != eventsList.end(); ++it)
+	for(auto & it : eventsList)
 	{
-		if((*it) == event) //do not allow registration of same event more than once
+		if(it == event) //do not allow registration of same event more than once
 			return false;
 	}
 
@@ -1562,10 +1562,10 @@ CreatureEventList Creature::getCreatureEvents(CreatureEventType_t type)
 	if(!hasEventRegistered(type))
 		return retList;
 
-	for(CreatureEventList::iterator it = eventsList.begin(); it != eventsList.end(); ++it)
+	for(auto & it : eventsList)
 	{
-		if((*it)->getEventType() == type)
-			retList.push_back(*it);
+		if(it->getEventType() == type)
+			retList.push_back(it);
 	}
 
 	return retList;
