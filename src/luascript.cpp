@@ -1453,6 +1453,9 @@ void LuaScriptInterface::registerFunctions()
 	//getPlayerFreeCap(cid)
 	lua_register(m_luaState, "getPlayerFreeCap", LuaScriptInterface::luaGetPlayerFreeCap);
 
+    //getPlayerAttackSpeed(cid)
+    lua_register(m_luaState, "getPlayerAttackSpeed", LuaScriptInterface::luaGetPlayerAttackSpeed);
+
 	//getPlayerLight(cid)
 	lua_register(m_luaState, "getPlayerLight", LuaScriptInterface::luaGetPlayerLight);
 
@@ -2459,7 +2462,7 @@ const luaL_Reg LuaScriptInterface::luaStdTable[] =
 int32_t LuaScriptInterface::internalGetPlayerInfo(lua_State* L, PlayerInfo_t info)
 {
 	ScriptEnviroment* env = getEnv();
-	const Player* player = env->getPlayerByUID(popNumber(L));
+	Player* player = env->getPlayerByUID(popNumber(L));
 	if(!player)
 	{
 		std::stringstream s;
@@ -2593,6 +2596,8 @@ int32_t LuaScriptInterface::internalGetPlayerInfo(lua_State* L, PlayerInfo_t inf
 		case PlayerInfoAccountManager:
 			value = player->accountManager;
 			break;
+        case PlayerInfoAttackSpeed:
+            value = player->getAttackSpeed();
 		default:
 			errorEx("Unknown player info #" + info);
 			value = 0;
@@ -2657,6 +2662,12 @@ int32_t LuaScriptInterface::luaGetPlayerSoul(lua_State* L)
 int32_t LuaScriptInterface::luaGetPlayerFreeCap(lua_State* L)
 {
 	return internalGetPlayerInfo(L, PlayerInfoFreeCap);
+}
+
+
+int32_t LuaScriptInterface::luaGetPlayerAttackSpeed(lua_State* L)
+{
+    return internalGetPlayerInfo(L, PlayerInfoAttackSpeed);
 }
 
 int32_t LuaScriptInterface::luaGetPlayerGuildId(lua_State* L)

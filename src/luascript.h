@@ -485,6 +485,7 @@ class LuaScriptInterface
 		static int32_t luaGetPlayerSoul(lua_State* L);
 		static int32_t luaGetPlayerStamina(lua_State* L);
 		static int32_t luaGetPlayerFreeCap(lua_State* L);
+        static int32_t luaGetPlayerAttackSpeed(lua_State* L);
 		static int32_t luaGetPlayerLight(lua_State* L);
 		static int32_t luaGetPlayerSlotItem(lua_State* L);
 		static int32_t luaGetPlayerWeapon(lua_State* L);
@@ -737,7 +738,8 @@ class LuaScriptInterface
 			PlayerInfoClient,
 			PlayerInfoLastLoad,
 			PlayerInfoLastLogin,
-			PlayerInfoAccountManager
+			PlayerInfoAccountManager,
+            PlayerInfoAttackSpeed
 		};
 		static int32_t internalGetPlayerInfo(lua_State* L, PlayerInfo_t info);
 
