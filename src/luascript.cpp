@@ -1549,6 +1549,9 @@ void LuaScriptInterface::registerFunctions()
 	//getInstantSpellInfo(cid, name)
 	lua_register(m_luaState, "getInstantSpellInfo", LuaScriptInterface::luaGetInstantSpellInfo);
 
+    //doPlayerCastSpell(cid, spell)
+    lua_register(m_luaState, "doPlayerCastSpell", LuaScriptInterface::luaDoPlayerCastSpell);
+
 	//getCreatureStorage(uid, key)
 	lua_register(m_luaState, "getCreatureStorage", LuaScriptInterface::luaGetCreatureStorage);
 
@@ -3113,6 +3116,29 @@ int32_t LuaScriptInterface::luaGetInstantSpellInfo(lua_State* L)
 	setField(L, "mana", spell->getManaCost(nullptr));
 	setField(L, "manapercent", spell->getManaPercent());
 	return 1;
+}
+
+int32_t LuaScriptInterface::luaDoPlayerCastSpell(lua_State* L)
+{
+    //doPlayerCastSpell(cid, spell)
+    std::string spell = popString(L);
+
+    ScriptEnviroment* env = getEnv();
+    Player* player = env->getPlayerByUID(popNumber(L));
+    if(!player)
+    {
+        errorEx(getError(LUA_ERROR_PLAYER_NOT_FOUND));
+        lua_pushboolean(L, false);
+        return 1;
+    }
+
+    ReturnValue ret = RET_NOERROR;
+    ret = g_spells->onPlayerSay(player, spell);
+    if(ret == RET_NOERROR || (ret == RET_NEEDEXCHANGE && !g_config.getBool(ConfigManager::BUFFER_SPELL_FAILURE)))
+        return true;
+
+    lua_pushboolean(L, true);
+    return 1;
 }
 
 int32_t LuaScriptInterface::luaDoRemoveItem(lua_State* L)
