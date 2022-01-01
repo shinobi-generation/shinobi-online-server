@@ -421,41 +421,41 @@ STATSCHANGE_HEALTHLOSS = 1
 STATSCHANGE_MANAGAIN = 2
 STATSCHANGE_MANALOSS = 3
 
-SKILL_FIST = 0
-SKILL_CLUB = 1
-SKILL_SWORD = 2
-SKILL_AXE = 3
+SKILL_TAIJUTSU = 0
+SKILL_NINJUTSU = 1
+SKILL_GENJUTSU = 2
+SKILL_MELEE = 3
 SKILL_DISTANCE = 4
-SKILL_SHIELD = 5
-SKILL_FISHING = 6
-SKILL__MAGLEVEL = 7
+SKILL_RESISTENCE = 5
+SKILL_AGILITY = 6
+SKILL__CHAKRALEVEL = 7
 SKILL__LEVEL = 8
 
 SKILL_NAMES = {
-	[SKILL_FIST] = "fist fighting",
-	[SKILL_CLUB] = "club fighting",
-	[SKILL_SWORD] = "sword fighting",
-	[SKILL_AXE] = "axe fighting",
-	[SKILL_DISTANCE] = "distance fighting",
-	[SKILL_SHIELD] = "shielding",
-	[SKILL_FISHING] = "fishing",
+	[SKILL_TAIJUTSU] = "taijutsu",
+	[SKILL_NINJUTSU] = "ninjutsu",
+	[SKILL_GENJUTSU] = "genjutsu",
+	[SKILL_MELEE] = "melee weapons",
+	[SKILL_DISTANCE] = "distance weapons",
+	[SKILL_RESISTENCE] = "resistence",
+	[SKILL_AGILITY] = "agility",
 	[SKILL__LEVEL] = "level",
-	[SKILL__MAGLEVEL] = "magic level"
+	[SKILL__CHAKRALEVEL] = "chakra level"
 }
 
 SKILL_IDS = {
-	["fist"] = SKILL_FIST,
-	["club"] = SKILL_CLUB,
-	["sword"] = SKILL_SWORD,
-	["axe"] = SKILL_AXE,
+	["fist"] = SKILL_TAIJUTSU,
+	["club"] = SKILL_NINJUTSU,
+	["sword"] = SKILL_GENJUTSU,
+	["axe"] = SKILL_MELEE,
 	["distance"] = SKILL_DISTANCE,
 	["dist"] = SKILL_DISTANCE,
-	["shielding"] = SKILL_SHIELD,
-	["shield"] = SKILL_SHIELD,
-	["fishing"] = SKILL_FISHING,
-	["fish"] = SKILL_FISHING,
+	["shielding"] = SKILL_RESISTENCE,
+	["shield"] = SKILL_RESISTENCE,
+	["fishing"] = SKILL_AGILITY,
+	["fish"] = SKILL_AGILITY,
 	["level"] = SKILL__LEVEL,
-	["magic"] = SKILL__MAGLEVEL
+	["magic"] = SKILL__CHAKRALEVEL
 }
 
 GUILDLEVEL_MEMBER = 1

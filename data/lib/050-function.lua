@@ -328,7 +328,7 @@ function doPlayerSetExperienceRate(cid, value)
 end
 
 function doPlayerSetMagicRate(cid, value)
-	return doPlayerSetRate(cid, SKILL__MAGLEVEL, value)
+	return doPlayerSetRate(cid, SKILL__CHAKRALEVEL, value)
 end
 
 function doPlayerAddLevel(cid, amount, round)
@@ -352,7 +352,7 @@ end
 function doPlayerAddSkill(cid, skill, amount, round)
 	if(skill == SKILL__LEVEL) then
 		return doPlayerAddLevel(cid, amount, round)
-	elseif(skill == SKILL__MAGLEVEL) then
+	elseif(skill == SKILL__CHAKRALEVEL) then
 		return doPlayerAddMagLevel(cid, amount)
 	end
 
