@@ -29,7 +29,7 @@ class House;
 class IOMapSerialize
 {
 	public:
-		virtual ~IOMapSerialize() {}
+		virtual ~IOMapSerialize() = default;
 		static IOMapSerialize* getInstance()
 		{
 			static IOMapSerialize instance;
@@ -49,7 +49,7 @@ class IOMapSerialize
         bool saveHouseItems(Database* db, House* house);
 
 	protected:
-		IOMapSerialize() {}
+		IOMapSerialize() = default;
 
 		// Relational storage uses a row for each item/tile
 		bool loadMapRelational(Map* map);

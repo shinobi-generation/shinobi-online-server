@@ -192,8 +192,10 @@ bool IOMapSerialize::saveHouses()
 	if(!trans.begin())
 		return false;
 
-	for(HouseMap::iterator it = Houses::getInstance()->getHouseBegin(); it != Houses::getInstance()->getHouseEnd(); ++it)
-		saveHouse(db, it->second);
+	for(auto it = Houses::getInstance()->getHouseBegin(); it != Houses::getInstance()->getHouseEnd(); ++it) {
+        saveHouse(db, it->second);
+        saveHouseItems(db, it->second);
+    }
 
 	return trans.commit();
 }
@@ -236,7 +238,7 @@ bool IOMapSerialize::saveHouse(Database* db, House* house)
 			return false;
 	}
 
-	for(HouseDoorList::iterator it = house->getHouseDoorBegin(); it != house->getHouseDoorEnd(); ++it)
+	for(auto it = house->getHouseDoorBegin(); it != house->getHouseDoorEnd(); ++it)
 	{
 		const Door* door = (*it);
 		if(!door)

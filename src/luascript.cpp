@@ -849,13 +849,13 @@ bool LuaScriptInterface::closeState()
 		return false;
 
 	m_cacheFiles.clear();
-	for(LuaTimerEvents::iterator it = m_timerEvents.begin(); it != m_timerEvents.end(); ++it)
+	for(auto & m_timerEvent : m_timerEvents)
 	{
-		for(std::list<int32_t>::iterator lt = it->second.parameters.begin(); lt != it->second.parameters.end(); ++lt)
+		for(std::list<int32_t>::iterator lt = m_timerEvent.second.parameters.begin(); lt != m_timerEvent.second.parameters.end(); ++lt)
 			luaL_unref(m_luaState, LUA_REGISTRYINDEX, *lt);
 
-		it->second.parameters.clear();
-		luaL_unref(m_luaState, LUA_REGISTRYINDEX, it->second.function);
+		m_timerEvent.second.parameters.clear();
+		luaL_unref(m_luaState, LUA_REGISTRYINDEX, m_timerEvent.second.function);
 	}
 
 	m_timerEvents.clear();
@@ -889,8 +889,8 @@ void LuaScriptInterface::executeTimer(uint32_t eventIndex)
 			std::cout << "[Error] Call stack overflow. LuaScriptInterface::executeTimer" << std::endl;
 
 		//free resources
-		for(std::list<int32_t>::iterator lt = it->second.parameters.begin(); lt != it->second.parameters.end(); ++lt)
-			luaL_unref(m_luaState, LUA_REGISTRYINDEX, *lt);
+		for(int & parameter : it->second.parameters)
+			luaL_unref(m_luaState, LUA_REGISTRYINDEX, parameter);
 
 		it->second.parameters.clear();
 		luaL_unref(m_luaState, LUA_REGISTRYINDEX, it->second.function);
@@ -1138,7 +1138,7 @@ std::string LuaScriptInterface::popString(lua_State* L)
 	lua_pop(L, 1);
 	const char* str = lua_tostring(L, 0);
 	if(!str || !strlen(str))
-		return std::string();
+		return {};
 
 	return str;
 }
@@ -2336,6 +2336,12 @@ void LuaScriptInterface::registerFunctions()
 
     //doSaveHouse({list})
     lua_register(m_luaState, "doSaveHouse", LuaScriptInterface::luaDoSaveHouse);
+
+    //doSaveHouses()
+    lua_register(m_luaState, "doSaveHouses", LuaScriptInterface::luaDoSaveHouses);
+
+    //getPlayersOnline()
+    lua_register(m_luaState, "getPlayersOnline", LuaScriptInterface::luaGetPlayersOnline);
 
 	//doCleanHouse(houseId)
 	lua_register(m_luaState, "doCleanHouse", LuaScriptInterface::luaDoCleanHouse);
@@ -8891,7 +8897,7 @@ int32_t LuaScriptInterface::luaGetTownHouses(lua_State* L)
 	if(lua_gettop(L) > 0)
 		townId = popNumber(L);
 
-	HouseMap::iterator it = Houses::getInstance()->getHouseBegin();
+	auto it = Houses::getInstance()->getHouseBegin();
 	lua_newtable(L);
 	for(uint32_t i = 1; it != Houses::getInstance()->getHouseEnd(); ++i, ++it)
 	{
@@ -8926,7 +8932,7 @@ int32_t LuaScriptInterface::luaGetSpectators(lua_State* L)
 	}
 
 	ScriptEnviroment* env = getEnv();
-	SpectatorVec::const_iterator it = list.begin();
+	auto it = list.begin();
 
 	lua_newtable(L);
 	for(uint32_t i = 1; it != list.end(); ++it, ++i)
@@ -9092,7 +9098,7 @@ int32_t LuaScriptInterface::luaDoSaveServer(lua_State* L)
 
 int32_t LuaScriptInterface::luaDoSaveHouse(lua_State* L)
 {
-    //doSaveHouse(houseID)
+    //doSaveHouse({list})
     if(g_config.getBool(ConfigManager::HOUSE_STORAGE))
     {
         std::stringstream s;
@@ -9133,6 +9139,26 @@ int32_t LuaScriptInterface::luaDoSaveHouse(lua_State* L)
     }
 
     lua_pushboolean(L, trans.commit());
+    return 1;
+}
+
+
+int32_t LuaScriptInterface::luaDoSaveHouses(lua_State* L)
+{
+    //doSaveHouses()
+    if(g_config.getBool(ConfigManager::HOUSE_STORAGE))
+    {
+        errorEx("config: useHouseDataStorage must be = no/false");
+        lua_pushboolean(L, false);
+    }
+
+    if(!IOMapSerialize::getInstance()->saveHouses())
+    {
+        errorEx("Unable to save houses information");
+        lua_pushboolean(L, false);
+    }
+
+    lua_pushboolean(L, true);
     return 1;
 }
 
