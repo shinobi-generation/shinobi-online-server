@@ -14,7 +14,7 @@ local level = getPlayerLevel(cid)
 local jutsuDmg = 27
 local skill_factor = math.ceil((jutsuSkill_factor(cid, 1) + level)/2)
 local dmg = - math.max(1, math.ceil(((skill_factor*0.5) * jutsuDmg)*0.30))
------[Restrições]-----
+-----[Restriï¿½ï¿½es]-----
 
 	if	impossibleUse(cid) then
 		return true
@@ -43,4 +43,5 @@ local dmg = - math.max(1, math.ceil(((skill_factor*0.5) * jutsuDmg)*0.30))
 			end
 		setPlayerStorageValue(cid, sto_jutsu[1], os.time() + temp.exhausted)
 	end
+	return true
 end
