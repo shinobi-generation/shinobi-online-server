@@ -2334,6 +2334,9 @@ void LuaScriptInterface::registerFunctions()
 	//doSaveServer()
 	lua_register(m_luaState, "doSaveServer", LuaScriptInterface::luaDoSaveServer);
 
+    //doSaveHouse({list})
+    lua_register(m_luaState, "doSaveHouse", LuaScriptInterface::luaDoSaveHouse);
+
 	//doCleanHouse(houseId)
 	lua_register(m_luaState, "doCleanHouse", LuaScriptInterface::luaDoCleanHouse);
 
@@ -9085,6 +9088,52 @@ int32_t LuaScriptInterface::luaDoSaveServer(lua_State* L)
 
 	Dispatcher::getInstance().addTask(createTask(boost::bind(&Game::saveGameState, &g_game, shallow)));
 	return 1;
+}
+
+int32_t LuaScriptInterface::luaDoSaveHouse(lua_State* L)
+{
+    //doSaveHouse(houseID)
+    if(g_config.getBool(ConfigManager::HOUSE_STORAGE))
+    {
+        std::stringstream s;
+        s << "config: useHouseDataStorage must be = no/false";
+        errorEx(s.str());
+        lua_pushboolean(L, false);
+    }
+
+    House* house = Houses::getInstance()->getHouse(popNumber(L));
+    if(!house)
+    {
+        errorEx(getError(LUA_ERROR_HOUSE_NOT_FOUND));
+        lua_pushboolean(L, false);
+        return 1;
+    }
+
+    Database* db = Database::getInstance();
+    DBTransaction trans(db);
+
+    if(!trans.begin())
+    {
+        lua_pushboolean(L, false);
+        return 1;
+    }
+
+    if(!IOMapSerialize::getInstance()->saveHouse(db, house))
+    {
+        std::stringstream s;
+        s << "Unable to save house information, ID: " << house->getId();
+        errorEx(s.str());
+    }
+
+    if(!IOMapSerialize::getInstance()->saveHouseItems(db, house))
+    {
+        std::stringstream s;
+        s << "Unable to save house items, ID: " << house->getId();
+        errorEx(s.str());
+    }
+
+    lua_pushboolean(L, trans.commit());
+    return 1;
 }
 
 int32_t LuaScriptInterface::luaDoCleanHouse(lua_State* L)

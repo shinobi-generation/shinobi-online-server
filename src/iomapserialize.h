@@ -45,7 +45,8 @@ class IOMapSerialize
 		bool updateHouses();
 		bool saveHouses();
 
-		bool saveHouse(Database* db, House* house);
+        bool saveHouse(Database* db, House* house);
+        bool saveHouseItems(Database* db, House* house);
 
 	protected:
 		IOMapSerialize() {}
@@ -53,6 +54,7 @@ class IOMapSerialize
 		// Relational storage uses a row for each item/tile
 		bool loadMapRelational(Map* map);
 		bool saveMapRelational(Map* map);
+        bool saveHouseRelational(Database* db, House* house, uint32_t& tileId);
 	
 		// Binary storage uses a giant BLOB field for storing everything
 		bool loadMapBinary(Map* map);
