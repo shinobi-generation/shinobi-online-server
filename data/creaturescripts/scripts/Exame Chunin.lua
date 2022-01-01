@@ -40,7 +40,7 @@ function onPrepareDeath(cid, deathList)
                             doPlayerAddItem(deathList[1], exame.scroll_id[math.random(1, 2)], 1)
                         end
                     end
-                    doPlayerSendTextMessage(deathList[1], MESSAGE_STATUS_CONSOLE_ORANGE, "Voce matou uma pessoa da equipe "..getPlayerStorageValue(target, 192191).." e roubou seu pergaminho! O pergaminho agora esta com vc")
+                    doPlayerSendTextMessage(deathList[1], MESSAGE_STATUS_CONSOLE_ORANGE, "Voce matou uma pessoa da equipe " .. getPlayerStorageValue(target, 192191) .. " e roubou seu pergaminho! O pergaminho agora esta com vc")
                 end
                 doPlayerSetStorageValue(players[i], 192191, -1)
                 doPlayerSetStorageValue(players[i], exame.team_storage, -1)
