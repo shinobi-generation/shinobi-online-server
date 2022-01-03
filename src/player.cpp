@@ -27,10 +27,6 @@
 
 #include "combat.h"
 
-#if defined(WINDOWS) && !defined(__CONSOLE__)
-#include "gui.h"
-#endif
-
 #include "movement.h"
 #include "weapons.h"
 #include "creatureevent.h"
@@ -1251,9 +1247,6 @@ void Player::onCreatureAppear(const Creature *creature) {
     if (!isGhost())
         IOLoginData::getInstance()->updateOnlineStatus(guid, true);
 
-#if defined(WINDOWS) && !defined(__CONSOLE__)
-    GUI::getInstance()->m_pBox.addPlayer(this);
-#endif
     if (g_config.getBool(ConfigManager::DISPLAY_LOGGING))
         std::cout << name << " has logged in." << std::endl;
 }
@@ -1330,9 +1323,6 @@ void Player::onCreatureDisappear(const Creature *creature, bool isLogout) {
     if (!isGhost())
         IOLoginData::getInstance()->updateOnlineStatus(guid, false);
 
-#if defined(WINDOWS) && !defined(__CONSOLE__)
-    GUI::getInstance()->m_pBox.removePlayer(this);
-#endif
     if (g_config.getBool(ConfigManager::DISPLAY_LOGGING))
         std::cout << getName() << " has logged out." << std::endl;
 

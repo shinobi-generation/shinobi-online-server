@@ -19,10 +19,14 @@
 // #error "Precompiled header should be included only once."
 // #endif
 
+#ifndef __OTPCH__
 #define __OTPCH__
 #if defined WINDOWS
 #include <winerror.h>
 #endif
+
+//std
+#include <random>
 
 //libxml
 #include <libxml/xmlmemory.h>
@@ -39,3 +43,5 @@ using namespace boost::placeholders;
 
 //otserv
 #include "thing.h"
+
+#endif // __OTPCH__

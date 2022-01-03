@@ -5218,7 +5218,9 @@ Position Game::getClosestFreeTile(Creature* creature, Position pos, bool extende
 		relList.push_back(PositionPair(2, 0));
 	}
 
-	std::random_shuffle(relList.begin() + 1, relList.end());
+	std::random_device rd;
+	std::mt19937 g(rd());
+	std::shuffle(relList.begin() + 1, relList.end(), g);
 	if(Player* player = creature->getPlayer())
 	{
 		for(PairVector::iterator it = relList.begin(); it != relList.end(); ++it)
@@ -6102,10 +6104,6 @@ void Game::shutdown()
 	std::cout << "- done." << std::endl;
 	if(services)
 		services->stop();
-#if defined(WINDOWS) && !defined(__CONSOLE__)
-
-	exit(1);
-#endif
 }
 
 void Game::cleanup()
@@ -6141,11 +6139,12 @@ void Game::showHotkeyUseMessage(Player* player, Item* item)
 	const ItemType& it = Item::items[item->getID()];
 	uint32_t count = player->__getItemTypeCount(item->getID(), subType, false);
 
-	char buffer[40 + it.name.size()];
-	if(count == 1)
-		sprintf(buffer, "Using the last %s...", it.name.c_str());
-	else
-		sprintf(buffer, "Using one of %d %s...", count, it.pluralName.c_str());
+	std::stringstream ss;
 
-	player->sendTextMessage(MSG_INFO_DESCR, buffer);
+	if(count == 1)
+		ss << "Using the last " << it.name.c_str() << "...";
+	else
+		ss << "Using one of " << count << " " << it.pluralName.c_str() << "...";
+
+	player->sendTextMessage(MSG_INFO_DESCR, ss.str());
 }

@@ -867,7 +867,10 @@ bool WeaponDistance::useWeapon(Player* player, Item* item, Creature* target) con
 			destList.push_back(std::make_pair(1, -1));
 			destList.push_back(std::make_pair(1, 0));
 			destList.push_back(std::make_pair(1, 1));
-			std::random_shuffle(destList.begin(), destList.end());
+
+			std::random_device rd;
+			std::mt19937 g(rd());
+			std::shuffle(destList.begin(), destList.end(), g);
 
 			Position destPos = target->getPosition();
 			Tile* tmpTile = NULL;

@@ -45,10 +45,6 @@
 #include "configmanager.h"
 #include "game.h"
 
-#if defined(WINDOWS) && !defined(__CONSOLE__)
-#include "gui.h"
-#endif
-
 extern Game g_game;
 extern ConfigManager g_config;
 extern Actions actions;
@@ -99,7 +95,7 @@ bool ProtocolGame::login(const std::string& name, uint32_t id, const std::string
 	PlayerVector players = g_game.getPlayersByName(name);
 	Player* _player = NULL;
 	if(!players.empty())
-		_player = players[random_range(0, (players.size() - 1))];
+		_player = players[ random_range(0, (players.size() - 1))];
 
 	if(!_player || name == "Account Manager" || g_config.getNumber(ConfigManager::ALLOW_CLONES) > (int32_t)players.size())
 	{
@@ -127,14 +123,17 @@ bool ProtocolGame::login(const std::string& name, uint32_t id, const std::string
 			else
 				IOLoginData::getInstance()->getNameByGuid(ban.adminId, name_, true);
 
-			char buffer[500 + ban.comment.length()];
-			sprintf(buffer, "Your character has been %s at:\n%s by: %s,\nfor the following reason:\n%s.\nThe action taken was:\n%s.\nThe comment given was:\n%s.\nYour %s%s.",
-				(deletion ? "deleted" : "banished"), formatDateShort(ban.added).c_str(), name_.c_str(),
-				getReason(ban.reason).c_str(), getAction(ban.action, false).c_str(), ban.comment.c_str(),
-				(deletion ? "character won't be undeleted" : "banishment will be lifted at:\n"),
-				(deletion ? "." : formatDateShort(ban.expires, true).c_str()));
+			std::stringstream ss;
+			ss << "Your character has been " << (deletion ? "deleted" : "banished") << " at:\n"
+				<< formatDateShort(ban.added) << "s by: " << name_ << ",\nfor the following reason:\n"
+				<< getReason(ban.reason) << ".\nThe action taken was:\n" << getAction(ban.action, false)
+				<< ".\nThe comment given was:\n" << ban.comment << ".\nYour " 
+				<< (deletion ? "character won't be undeleted" : "banishment will be lifted at:\n")
+				<< (deletion ? "." : formatDateShort(ban.expires, true));
 
-			disconnectClient(0x14, buffer);
+			
+
+			disconnectClient(0x14, ss.str().c_str());
 			return false;
 		}
 
@@ -407,9 +406,6 @@ void ProtocolGame::onRecvFirstMessage(NetworkMessage& msg)
 bool ProtocolGame::parseFirstPacket(NetworkMessage& msg)
 {
 	if(
-#if defined(WINDOWS) && !defined(__CONSOLE__)
-		!GUI::getInstance()->m_connections ||
-#endif
 		g_game.getGameState() == GAME_STATE_SHUTDOWN)
 	{
 		getConnection()->close();
@@ -507,14 +503,16 @@ bool ProtocolGame::parseFirstPacket(NetworkMessage& msg)
 		else
 			IOLoginData::getInstance()->getNameByGuid(ban.adminId, name_, true);
 
-		char buffer[500 + ban.comment.length()];
-		sprintf(buffer, "Your account has been %s at:\n%s by: %s,\nfor the following reason:\n%s.\nThe action taken was:\n%s.\nThe comment given was:\n%s.\nYour %s%s.",
-			(deletion ? "deleted" : "banished"), formatDateShort(ban.added).c_str(), name_.c_str(),
-			getReason(ban.reason).c_str(), getAction(ban.action, false).c_str(), ban.comment.c_str(),
-			(deletion ? "account won't be undeleted" : "banishment will be lifted at:\n"),
-			(deletion ? "." : formatDateShort(ban.expires, true).c_str()));
+		std::stringstream ss;
+		ss << "Your account has been " << (deletion ? "deleted" : "banished") << " at:\n"
+			<< formatDateShort(ban.added) << " by: " << name_ << ",\nfor the following reason:\n"
+			<< getReason(ban.reason) << ".\nThe action taken was:\n" << getAction(ban.action, false)
+			<< ".\nThe comment given was:\n" << ban.comment << ".\nYour "
+			<< (deletion ? "account won't be undeleted" : "banishment will be lifted at:\n")
+			<< (deletion ? "." : formatDateShort(ban.expires, true));
 
-		disconnectClient(0x14, buffer);
+
+		disconnectClient(0x14, ss.str().c_str());
 		return false;
 	}
 

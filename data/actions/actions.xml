@@ -1,124 +1,124 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <actions>
-  <!-- CMDS -->
-<action itemid="11391" event="script" value="CMD/walk.lua"/>
-<action itemid="11392" event="script" value="CMD/Run.lua"/>
-<action itemid="11393" event="script" value="CMD/rest.lua"/>
-<action itemid="11428" event="script" value="CMD/mold.lua"/>
-<action itemid="12888" event="script" value="CMD/throw.lua" allowfaruse="1"/>
+	<!-- CMDS -->
+	<action itemid="11391" event="script" value="CMD/walk.lua"/>
+	<action itemid="11392" event="script" value="CMD/Run.lua"/>
+	<action itemid="11393" event="script" value="CMD/rest.lua"/>
+	<action itemid="11428" event="script" value="CMD/mold.lua"/>
+	<action itemid="12888" event="script" value="CMD/throw.lua" allowfaruse="1"/>
 
-<!-- Inuzuka -->
-<action itemid="12791" event="script" value="Inuzuka Jutsu/pet-call.lua"/>
-<action itemid="12792" event="script" value="Inuzuka Jutsu/pet-back.lua"/>
-<action itemid="12793" event="script" value="Inuzuka Jutsu/pet-rest.lua"/>
-<action itemid="12787" event="script" value="Inuzuka Jutsu/Tsuuga.lua"/>
-<action itemid="12786" event="script" value="Inuzuka Jutsu/Shikyaku no Jutsu.lua"/>
-<action itemid="12785" event="script" value="Inuzuka Jutsu/Juujin Bunshin.lua"/>
-<action itemid="12788" event="script" value="Inuzuka Jutsu/Gatsuuga.lua"/>
-<action itemid="12789" event="script" value="Inuzuka Jutsu/Soutorou.lua"/>
-<action itemid="12790" event="script" value="Inuzuka Jutsu/Garouga.lua"/>
-<action itemid="12296" event="script" value="Inuzuka Jutsu/Dynamic Marking.lua" allowfaruse="1"/>
-<action itemid="12795" event="script" value="Inuzuka Jutsu/Bite.lua"/>
-<action itemid="12796" event="script" value="Inuzuka Jutsu/Scratch.lua"/>
-<action itemid="12797" event="script" value="Inuzuka Jutsu/Moko Taiko.lua"/>
+	<!-- Inuzuka -->
+	<action itemid="12791" event="script" value="Inuzuka Jutsu/pet-call.lua"/>
+	<action itemid="12792" event="script" value="Inuzuka Jutsu/pet-back.lua"/>
+	<action itemid="12793" event="script" value="Inuzuka Jutsu/pet-rest.lua"/>
+	<action itemid="12787" event="script" value="Inuzuka Jutsu/Tsuuga.lua"/>
+	<action itemid="12786" event="script" value="Inuzuka Jutsu/Shikyaku no Jutsu.lua"/>
+	<action itemid="12785" event="script" value="Inuzuka Jutsu/Juujin Bunshin.lua"/>
+	<action itemid="12788" event="script" value="Inuzuka Jutsu/Gatsuuga.lua"/>
+	<action itemid="12789" event="script" value="Inuzuka Jutsu/Soutorou.lua"/>
+	<action itemid="12790" event="script" value="Inuzuka Jutsu/Garouga.lua"/>
+	<action itemid="12296" event="script" value="Inuzuka Jutsu/Dynamic Marking.lua" allowfaruse="1"/>
+	<action itemid="12795" event="script" value="Inuzuka Jutsu/Bite.lua"/>
+	<action itemid="12796" event="script" value="Inuzuka Jutsu/Scratch.lua"/>
+	<action itemid="12797" event="script" value="Inuzuka Jutsu/Moko Taiko.lua"/>
 
-<!-- Ninpou		 -->
-<action itemid="13440" event="script" value="Ninpou/Konoha Shunshin No Jutsu.lua"/>
-<action itemid="12736" event="script" value="Ninpou/Mizu Kinobori.lua"/>
-<action itemid="11468" event="script" value="Ninpou/kawarimi.lua"/>
-<action itemid="12733" event="script" value="Ninpou/Henge.lua" allowfaruse="1"/>
-<action itemid="12732" event="script" value="Ninpou/Kakuremino.lua" allowfaruse="1"/>
-<action itemid="12253" event="script" value="Ninpou/Bunshin.lua"/>
-<action itemid="12250" event="script" value="Ninpou/returnBunshin.lua"/>
-<action itemid="11466" event="script" value="Ninpou/Kai.lua"/>
-
-
-<!-- Medicinal -->
-<action itemid="11467" event="script" value="Medicinal/Chyute.lua"/>
-<action itemid="12837" event="script" value="Medicinal/Saikan Chuushutsu no Jutsu.lua"/>
-
-<!-- Genjutsu -->
-<action itemid="11462" event="script" value="Genjutsus/kaen.lua" allowfaruse="1"/>
-<action itemid="11460" event="script" value="Genjutsus/kanashibari.lua" allowfaruse="1"/>
-<action itemid="12777" event="script" value="Genjutsus/nehan shoja.lua"/>
-
- <!-- Hyuuga  -->
-<action itemid="11429" event="script" value="Hyuuga Jutsu/Byakugan.lua"/>
-<action itemid="11430" event="script" value="Hyuuga Jutsu/Byakugan Search Off.lua"/>
-<action itemid="11431" event="script" value="Hyuuga Jutsu/Byakugan Search.lua"/> 
-<action itemid="11464" event="script" value="Hyuuga Jutsu/Hiasangi.lua"/>
-<action itemid="11408" event="script" value="Hyuuga Jutsu/Kuushou.lua"/>
-<action itemid="11410" event="script" value="Hyuuga Jutsu/Kaiten.lua"/>
-<action itemid="11444" event="script" value="Hyuuga Jutsu/Sanjuunishou.lua"/>
-<action itemid="11409" event="script" value="Hyuuga Jutsu/Hasengeki.lua"/>	
-<action itemid="11465" event="script" value="Hyuuga Jutsu/Shiten Kuushou.lua"/>
-<action itemid="12781" event="script" value="Hyuuga Jutsu/RokujuuyonShou.lua"/>
-<action itemid="12782" event="script" value="Hyuuga Jutsu/Hyakunijuuhachi shou.lua"/>
-
- <!-- Uchiha  -->
-<action itemid="11446" event="script" value="Uchiha Jutsu/Sharingan Level 1.lua"/>
-<action itemid="11447" event="script" value="Uchiha Jutsu/Sharingan Level 2.lua"/>
-<action itemid="11475" event="script" value="Uchiha Jutsu/Sharingan Level 3.lua"/>
-<action itemid="11476" event="script" value="Uchiha Jutsu/Mangekyou Sharingan.lua"/>
-<action itemid="11422" event="script" value="Uchiha Jutsu/Katon Endan.lua" allowfaruse="1"/>
-<action itemid="11423" event="script" value="Uchiha Jutsu/Katon Goukakyuu.lua"/>
-<action itemid="11424" event="script" value="Uchiha Jutsu/Katon Housenka no Jutsu.lua" allowfaruse="1"/>
-<action itemid="11425" event="script" value="Uchiha Jutsu/Katon Shiruko no Jutsu.lua"/>
-<action itemid="11426" event="script" value="Uchiha Jutsu/Katon Karyuudan.lua" allowfaruse="1"/>
-<action itemid="11456" event="script" value="Uchiha Jutsu/Katon Ryuuka.lua"/>
-<action itemid="11457" event="script" value="Uchiha Jutsu/Katon Gouryuuka.lua" allowfaruse="1"/>
-<action itemid="11458" event="script" value="Uchiha Jutsu/Katon Karyuu Endan.lua" allowfaruse="1"/>
-<action itemid="11478" event="script" value="Uchiha Jutsu/Mangekyou Sharingan/Tsukuyomi.lua" allowfaruse="1"/>
+	<!-- Ninpou		 -->
+	<action itemid="13440" event="script" value="Ninpou/Konoha Shunshin No Jutsu.lua"/>
+	<action itemid="12736" event="script" value="Ninpou/Mizu Kinobori.lua"/>
+	<action itemid="11468" event="script" value="Ninpou/kawarimi.lua"/>
+	<action itemid="12733" event="script" value="Ninpou/Henge.lua" allowfaruse="1"/>
+	<action itemid="12732" event="script" value="Ninpou/Kakuremino.lua" allowfaruse="1"/>
+	<action itemid="12253" event="script" value="Ninpou/Bunshin.lua"/>
+	<action itemid="12250" event="script" value="Ninpou/returnBunshin.lua"/>
+	<action itemid="11466" event="script" value="Ninpou/Kai.lua"/>
 
 
- <!-- Aburame  -->
-<action itemid="11454" event="script" value="Aburame Jutsu/Kikaichuu Bashira.lua"/>
-<action itemid="11452" event="script" value="Aburame Jutsu/Kikaichuu Call.lua"/>
-<action itemid="11451" event="script" value="Aburame Jutsu/Kikaichuu no Jutsu.lua"/>
-<action itemid="11453" event="script" value="Aburame Jutsu/Kikaichuu Return.lua"/>
-<action itemid="12722" event="script" value="Aburame Jutsu/Mushi Bunshin no Jutsu.lua" allowfaruse="1"/>
-<action itemid="11455" event="script" value="Aburame Jutsu/Kikaichuu Yajiri no Jutsu.lua" allowfaruse="1"/>
-<action itemid="11398" event="script" value="Aburame Jutsu/Kikaichuu Mushi Kame.lua"/>	
-<action itemid="11396" event="script" value="Aburame Jutsu/Kikaichuu Tsumoji no Jutsu.lua" allowfaruse="1"/>
-<action itemid="11471" event="script" value="Aburame Jutsu/Kikaichuu Arare No Jutsu.lua" allowfaruse="1"/>		
-<action itemid="11432" event="script" value="Aburame Jutsu/Kikaichuu Mushidama.lua"  allowfaruse="1"/>	
+	<!-- Medicinal -->
+	<action itemid="11467" event="script" value="Medicinal/Chyute.lua"/>
+	<action itemid="12837" event="script" value="Medicinal/Saikan Chuushutsu no Jutsu.lua"/>
 
- <!-- Maito  -->
-<action itemid="11482" event="script" value="Maito Jutsu/Konoha Senpuu.lua"/>
-<action itemid="12370" event="script" value="Maito Jutsu/Konoha Dai Senpuu.lua"/>
-<action itemid="11483" event="script" value="Maito Jutsu/Dinamyc Entry.lua"/>
-<action itemid="13439" event="script" value="Maito Jutsu/Gouriki Senpuu.lua"/>
-<action itemid="11493" event="script" value="Maito Jutsu/Omote Renge.lua" allowfaruse="1"/>
-<action itemid="11485" event="script" value="Maito Jutsu/Kaimon.lua"/>
-<action itemid="11486" event="script" value="Maito Jutsu/Kyumon.lua"/>
-<action itemid="11487" event="script" value="Maito Jutsu/Seimon.lua"/>
-<action itemid="11488" event="script" value="Maito Jutsu/Shomon.lua"/>
-<action itemid="11489" event="script" value="Maito Jutsu/Tomon.lua"/>
-<action itemid="11490" event="script" value="Maito Jutsu/Keimon.lua"/>
-<action itemid="11491" event="script" value="Maito Jutsu/Kyomon.lua"/>
-<action itemid="11492" event="script" value="Maito Jutsu/Shimon.lua"/>
+	<!-- Genjutsu -->
+	<action itemid="11462" event="script" value="Genjutsus/kaen.lua" allowfaruse="1"/>
+	<action itemid="11460" event="script" value="Genjutsus/kanashibari.lua" allowfaruse="1"/>
+	<action itemid="12777" event="script" value="Genjutsus/nehan shoja.lua"/>
+
+	 <!-- Hyuuga  -->
+	<action itemid="11429" event="script" value="Hyuuga Jutsu/Byakugan.lua"/>
+	<action itemid="11430" event="script" value="Hyuuga Jutsu/Byakugan Search Off.lua"/>
+	<action itemid="11431" event="script" value="Hyuuga Jutsu/Byakugan Search.lua"/> 
+	<action itemid="11464" event="script" value="Hyuuga Jutsu/Hiasangi.lua"/>
+	<action itemid="11408" event="script" value="Hyuuga Jutsu/Kuushou.lua"/>
+	<action itemid="11410" event="script" value="Hyuuga Jutsu/Kaiten.lua"/>
+	<action itemid="11444" event="script" value="Hyuuga Jutsu/Sanjuunishou.lua"/>
+	<action itemid="11409" event="script" value="Hyuuga Jutsu/Hasengeki.lua"/>	
+	<action itemid="11465" event="script" value="Hyuuga Jutsu/Shiten Kuushou.lua"/>
+	<action itemid="12781" event="script" value="Hyuuga Jutsu/RokujuuyonShou.lua"/>
+	<action itemid="12782" event="script" value="Hyuuga Jutsu/Hyakunijuuhachi shou.lua"/>
+
+	 <!-- Uchiha  -->
+	<action itemid="11446" event="script" value="Uchiha Jutsu/Sharingan Level 1.lua"/>
+	<action itemid="11447" event="script" value="Uchiha Jutsu/Sharingan Level 2.lua"/>
+	<action itemid="11475" event="script" value="Uchiha Jutsu/Sharingan Level 3.lua"/>
+	<action itemid="11476" event="script" value="Uchiha Jutsu/Mangekyou Sharingan.lua"/>
+	<action itemid="11422" event="script" value="Uchiha Jutsu/Katon Endan.lua" allowfaruse="1"/>
+	<action itemid="11423" event="script" value="Uchiha Jutsu/Katon Goukakyuu.lua"/>
+	<action itemid="11424" event="script" value="Uchiha Jutsu/Katon Housenka no Jutsu.lua" allowfaruse="1"/>
+	<action itemid="11425" event="script" value="Uchiha Jutsu/Katon Shiruko no Jutsu.lua"/>
+	<action itemid="11426" event="script" value="Uchiha Jutsu/Katon Karyuudan.lua" allowfaruse="1"/>
+	<action itemid="11456" event="script" value="Uchiha Jutsu/Katon Ryuuka.lua"/>
+	<action itemid="11457" event="script" value="Uchiha Jutsu/Katon Gouryuuka.lua" allowfaruse="1"/>
+	<action itemid="11458" event="script" value="Uchiha Jutsu/Katon Karyuu Endan.lua" allowfaruse="1"/>
+	<action itemid="11478" event="script" value="Uchiha Jutsu/Mangekyou Sharingan/Tsukuyomi.lua" allowfaruse="1"/>
 
 
- <!-- Akimichi -->
-<action itemid="12356" event="script" value="Akimichi Jutsu/Hari Sensha.lua"/>
-<action itemid="12357" event="script" value="Akimichi Jutsu/Nikudan Sensha.lua"/>
-<action itemid="12366" event="script" value="Akimichi Jutsu/Horengan.lua"/>
-<action itemid="12728" event="script" value="Akimichi Jutsu/Chou Baika.lua"/>
-<action itemid="12365" event="script" value="Akimichi Jutsu/Omoni.lua"/>
-<action itemid="12367" event="script" value="Akimichi Jutsu/Karegan.lua"/>
-<action itemid="12726" event="script" value="Akimichi Jutsu/Harite Chou.lua"/>
-<action itemid="12723" event="script" value="Akimichi Jutsu/Mizudan Suisha.lua"/>
-<action itemid="12724" event="script" value="Akimichi Jutsu/Bubun Baika.lua"/>
-<action itemid="12368" event="script" value="Akimichi Jutsu/Tongarashigan.lua"/>
-<action itemid="12730" event="script" value="Akimichi Jutsu/Choudan Bakugeki.lua"/>
+	 <!-- Aburame  -->
+	<action itemid="11454" event="script" value="Aburame Jutsu/Kikaichuu Bashira.lua"/>
+	<action itemid="11452" event="script" value="Aburame Jutsu/Kikaichuu Call.lua"/>
+	<action itemid="11451" event="script" value="Aburame Jutsu/Kikaichuu no Jutsu.lua"/>
+	<action itemid="11453" event="script" value="Aburame Jutsu/Kikaichuu Return.lua"/>
+	<action itemid="12722" event="script" value="Aburame Jutsu/Mushi Bunshin no Jutsu.lua" allowfaruse="1"/>
+	<action itemid="11455" event="script" value="Aburame Jutsu/Kikaichuu Yajiri no Jutsu.lua" allowfaruse="1"/>
+	<action itemid="11398" event="script" value="Aburame Jutsu/Kikaichuu Mushi Kame.lua"/>	
+	<action itemid="11396" event="script" value="Aburame Jutsu/Kikaichuu Tsumoji no Jutsu.lua" allowfaruse="1"/>
+	<action itemid="11471" event="script" value="Aburame Jutsu/Kikaichuu Arare No Jutsu.lua" allowfaruse="1"/>		
+	<action itemid="11432" event="script" value="Aburame Jutsu/Kikaichuu Mushidama.lua"  allowfaruse="1"/>	
 
- <!-- Nara  -->
-<action itemid="12868" event="script" value="Nara Jutsu/Kagemane.lua"/>
-<action itemid="12875" event="script" value="Nara Jutsu/Kage Kubi Shibari.lua"/>
-<action itemid="12870" event="script" value="Nara Jutsu/kage nui.lua"/>
-<action itemid="12871" event="script" value="Nara Jutsu/duplicate.lua"/>
-<action itemid="12872" event="script" value="Nara Jutsu/Kagemane Shuriken.lua"/>
-<action itemid="12225" event="script" value="Nara Jutsu/free.lua" allowfaruse="1"/>
+	 <!-- Maito  -->
+	<action itemid="11482" event="script" value="Maito Jutsu/Konoha Senpuu.lua"/>
+	<action itemid="12370" event="script" value="Maito Jutsu/Konoha Dai Senpuu.lua"/>
+	<action itemid="11483" event="script" value="Maito Jutsu/Dinamyc Entry.lua"/>
+	<action itemid="13439" event="script" value="Maito Jutsu/Gouriki Senpuu.lua"/>
+	<action itemid="11493" event="script" value="Maito Jutsu/Omote Renge.lua" allowfaruse="1"/>
+	<action itemid="11485" event="script" value="Maito Jutsu/Kaimon.lua"/>
+	<action itemid="11486" event="script" value="Maito Jutsu/Kyumon.lua"/>
+	<action itemid="11487" event="script" value="Maito Jutsu/Seimon.lua"/>
+	<action itemid="11488" event="script" value="Maito Jutsu/Shomon.lua"/>
+	<action itemid="11489" event="script" value="Maito Jutsu/Tomon.lua"/>
+	<action itemid="11490" event="script" value="Maito Jutsu/Keimon.lua"/>
+	<action itemid="11491" event="script" value="Maito Jutsu/Kyomon.lua"/>
+	<action itemid="11492" event="script" value="Maito Jutsu/Shimon.lua"/>
+
+
+	 <!-- Akimichi -->
+	<action itemid="12356" event="script" value="Akimichi Jutsu/Hari Sensha.lua"/>
+	<action itemid="12357" event="script" value="Akimichi Jutsu/Nikudan Sensha.lua"/>
+	<action itemid="12366" event="script" value="Akimichi Jutsu/Horengan.lua"/>
+	<action itemid="12728" event="script" value="Akimichi Jutsu/Chou Baika.lua"/>
+	<action itemid="12365" event="script" value="Akimichi Jutsu/Omoni.lua"/>
+	<action itemid="12367" event="script" value="Akimichi Jutsu/Karegan.lua"/>
+	<action itemid="12726" event="script" value="Akimichi Jutsu/Harite Chou.lua"/>
+	<action itemid="12723" event="script" value="Akimichi Jutsu/Mizudan Suisha.lua"/>
+	<action itemid="12724" event="script" value="Akimichi Jutsu/Bubun Baika.lua"/>
+	<action itemid="12368" event="script" value="Akimichi Jutsu/Tongarashigan.lua"/>
+	<action itemid="12730" event="script" value="Akimichi Jutsu/Choudan Bakugeki.lua"/>
+
+	 <!-- Nara  -->
+	<action itemid="12868" event="script" value="Nara Jutsu/Kagemane.lua"/>
+	<action itemid="12875" event="script" value="Nara Jutsu/Kage Kubi Shibari.lua"/>
+	<action itemid="12870" event="script" value="Nara Jutsu/kage nui.lua"/>
+	<action itemid="12871" event="script" value="Nara Jutsu/duplicate.lua"/>
+	<action itemid="12872" event="script" value="Nara Jutsu/Kagemane Shuriken.lua"/>
+	<action itemid="12225" event="script" value="Nara Jutsu/free.lua" allowfaruse="1"/>
 
 	 <!-- Quests  -->
 	<action actionid="2000" event="script" value="quests/system.lua"/>
@@ -417,6 +417,4 @@
 
 	<!-- Missao -->
 	<action itemid="12667" event="script" value="tools/trash.lua" allowfaruse="1"/>
- 
-
-    </actions>
+ </actions>

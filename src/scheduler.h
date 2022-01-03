@@ -50,7 +50,7 @@ inline SchedulerTask* createSchedulerTask(uint32_t delay, const boost::function<
 	return new SchedulerTask(delay, f);
 }
 
-class lessTask : public std::binary_function<SchedulerTask*&, SchedulerTask*&, bool>
+class lessTask : public std::function<bool(SchedulerTask*&, SchedulerTask*&)>
 {
 	public:
 		bool operator()(SchedulerTask*& t1, SchedulerTask*& t2) {return (*t1) < (*t2);}

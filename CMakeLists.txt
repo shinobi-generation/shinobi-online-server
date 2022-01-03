@@ -14,7 +14,7 @@ option(ENABLE_POSTGRES "" OFF)
 option(ENABLE_ODBC "" OFF)
 
 if (ENABLE_MYSQL)
-    find_package(MySQL REQUIRED)
+    find_package(libmysql REQUIRED)
 
     list(APPEND shinobi_SRC src/database/databasemysql.cpp)
     message("-- mysql source has added to server executable")
@@ -42,7 +42,7 @@ set_target_properties(shinobi-server PROPERTIES CXX_STANDARD 17)
 set_target_properties(shinobi-server PROPERTIES CXX_STANDARD_REQUIRED ON)
 
 if(ENABLE_MYSQL)
-    target_compile_definitions(shinobi-server PRIVATE __USE_MYSQL__=1)
+    target_compile_definitions(shinobi-server PRIVATE __USE_MYSQL__=1 NOMINMAX)
 endif()
 
 if (NOT WIN32)
@@ -62,7 +62,7 @@ find_package(LibXml2 REQUIRED)
 
 find_package(Lua REQUIRED)
 
-find_package(Boost 1.78.0 REQUIRED COMPONENTS date_time system filesystem iostreams thread)
+find_package(Boost 1.77.0 REQUIRED COMPONENTS date_time system filesystem iostreams thread)
 
 find_package(GMP REQUIRED)
 
@@ -75,7 +75,7 @@ target_link_libraries(shinobi-server PRIVATE
         Boost::thread
         ${CMAKE_THREAD_LIBS_INIT}
         ${LUA_LIBRARIES}
-        ${MYSQL_CLIENT_LIBS}
+        ${MYSQL_LIBRARIES}
         ${LIBXML2_LIBRARIES}
         ${GMP_LIBRARIES}
         )
