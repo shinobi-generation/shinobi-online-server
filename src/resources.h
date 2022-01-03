@@ -85,9 +85,9 @@
 #define STATUS_SERVER_CODENAME "Wind"
 #define STATUS_SERVER_PROTOCOL "8.54"
 
-#define VERSION_CHECK "http://forgottenserver.otland.net/version.xml"
+#define VERSION_CHECK "https://raw.githubusercontent.com/gilmarxd/shinobi-online-server/main/versions.xml"
 #define VERSION_PATCH 1
-#define VERSION_TIMESTAMP 1261647210
-#define VERSION_BUILD 3429
+#define VERSION_TIMESTAMP 1641157709
+#define VERSION_BUILD 1001
 #define VERSION_DATABASE 23
 #endif
