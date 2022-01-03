@@ -203,6 +203,8 @@ bool CreatureEvent::configureEvent(xmlNodePtr p)
 		m_type = CREATURE_EVENT_PREPAREDEATH;
 	else if(tmpStr == "extendedopcode")
 		m_type = CREATURE_EVENT_EXTENDED_OPCODE;
+	else if(tmpStr == "creaturemove")
+		m_type = CREATURE_EVENT_CREATURE_MOVE;
 	else
 	{
 		std::cout << "[Error - CreatureEvent::configureEvent] No valid type for creature event." << str << std::endl;
@@ -271,6 +273,8 @@ std::string CreatureEvent::getScriptEventName() const
 			return "onPrepareDeath";
 		case CREATURE_EVENT_EXTENDED_OPCODE:
 			return "onExtendedOpcode";
+		case CREATURE_EVENT_CREATURE_MOVE:
+			return "onCreatureMove";
 		case CREATURE_EVENT_NONE:
 		default:
 			break;
@@ -1917,6 +1921,62 @@ uint32_t CreatureEvent::executeFollow(Creature* creature, Creature* target)
 			lua_pushnumber(L, env->addThing(target));
 
 			bool result = m_interface->callFunction(2);
+			m_interface->releaseEnv();
+			return result;
+		}
+	}
+	else
+	{
+		std::cout << "[Error - CreatureEvent::executeFollow] Call stack overflow." << std::endl;
+		return 0;
+	}
+}
+
+
+uint32_t CreatureEvent::executeCreatureMove(Creature* creature, const Position& from, const Position& to)
+{
+	//onCreatureMove(cid, from, to)
+	if(m_interface->reserveEnv())
+	{
+		ScriptEnviroment* env = m_interface->getEnv();
+		if(m_scripted == EVENT_SCRIPT_BUFFER)
+		{
+			env->setRealPos(creature->getPosition());
+			std::stringstream scriptstream;
+
+			scriptstream << "local cid = " << env->addThing(creature) << std::endl;
+			env->streamPosition(scriptstream, "from", from);
+			env->streamPosition(scriptstream, "to", to);
+			scriptstream << m_scriptData;
+			bool result = true;
+			if(m_interface->loadBuffer(scriptstream.str()))
+			{
+				lua_State* L = m_interface->getState();
+				result = m_interface->getGlobalBool(L, "_result", true);
+			}
+
+			m_interface->releaseEnv();
+			return result;
+		}
+		else
+		{
+			#ifdef __DEBUG_LUASCRIPTS__
+			std::stringstream desc;
+			desc << creature->getName();
+			env->setEventDesc(desc.str());
+			#endif
+
+			env->setScriptId(m_scriptId, m_interface);
+			env->setRealPos(creature->getPosition());
+
+			lua_State* L = m_interface->getState();
+			m_interface->pushFunction(m_scriptId);
+
+			lua_pushnumber(L, env->addThing(creature));
+			LuaScriptInterface::pushPosition(L, from);
+			LuaScriptInterface::pushPosition(L, to);
+
+			bool result = m_interface->callFunction(3);
 			m_interface->releaseEnv();
 			return result;
 		}

@@ -651,6 +651,10 @@ void Creature::onCreatureMove(const Creature* creature, const Tile* newTile, con
 		else
 			internalCreatureDisappear(attackedCreature, false);
 	}
+
+	CreatureEventList creatureMoveEvents = getCreatureEvents(CREATURE_EVENT_CREATURE_MOVE);
+	for(auto & creatureMoveEvent : creatureMoveEvents)
+		creatureMoveEvent->executeCreatureMove(this, oldPos, newPos);
 }
 
 bool Creature::onDeath()
