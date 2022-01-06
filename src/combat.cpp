@@ -312,10 +312,17 @@ ReturnValue Combat::canDoCombat(const Creature* attacker, const Creature* target
 		RET_ACTIONNOTPERMITTEDINANOPVPZONE : RET_NOERROR;
 }
 
-ReturnValue Combat::canTargetCreature(const Player* player, const Creature* target)
+ReturnValue Combat::canTargetCreature(Player* player, const Creature* target)
 {
 	if(player == target)
 		return RET_YOUMAYNOTATTACKTHISPLAYER;
+
+	std::list<Creature*> summons = player->getSummons();
+
+	auto summon = std::find(summons.begin(), summons.end(), target);
+	if (summon != summons.end()) {
+		return RET_YOUMAYNOTATTACKTHISCREATURE;
+	}
 
 	Player* tmpPlayer = const_cast<Player*>(player);
 	CreatureEventList targetEvents = tmpPlayer->getCreatureEvents(CREATURE_EVENT_TARGET);
