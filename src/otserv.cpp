@@ -158,7 +158,23 @@ bool argumentsHandler(StringVec args)
 	return true;
 }
 
-#ifndef WINDOWS
+#ifdef WINDOWS
+BOOL consoleHandler(DWORD signal) {
+
+	switch (signal) {
+		case CTRL_C_EVENT: {
+			Dispatcher::getInstance().addTask(createTask(
+				boost::bind(&Game::setGameState, &g_game, GAME_STATE_SHUTDOWN)));
+			break;
+		}
+		case CTRL_SHUTDOWN_EVENT: {
+			Dispatcher::getInstance().addTask(createTask(
+				boost::bind(&Game::shutdown, &g_game)));
+		}
+	}
+	return TRUE;
+};
+#else
 void signalHandler(int32_t sig)
 {
 	uint32_t tmp = 0;
@@ -251,7 +267,9 @@ int main(int argc, char *argv[])
 	ExceptionHandler mainExceptionHandler;
 	mainExceptionHandler.InstallHandler();
 	#endif
-	#ifndef WINDOWS
+	#ifdef WINDOWS
+	SetConsoleCtrlHandler((PHANDLER_ROUTINE)consoleHandler, TRUE);
+	#else
 
 	// ignore sigpipe...
 	struct sigaction sigh;
@@ -475,7 +493,7 @@ ServiceManager* services)
 	}
 	
 	std::cout << ">> Checking software version... ";
-	if(xmlDocPtr doc = xmlParseFile(VERSION_CHECK))
+	if(xmlDocPtr doc = xmlReadFile(VERSION_CHECK, "UTF-8", 0))
 	{
 		xmlNodePtr p, root = xmlDocGetRootElement(doc);
 		if(!xmlStrcmp(root->name, (const xmlChar*)"versions"))
